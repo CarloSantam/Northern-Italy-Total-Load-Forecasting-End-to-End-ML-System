@@ -1,3 +1,4 @@
+s3fs
 boto3
 cdsapi
 pandas
