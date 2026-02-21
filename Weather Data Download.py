@@ -11,6 +11,15 @@ from datetime import timedelta
 
 import os
 
+# Get the absolute path of the current script
+script_path = os.path.abspath(__file__)
+
+# Get the directory containing the script
+script_dir = os.path.dirname(script_path)
+
+# Change the working directory to the script directory
+os.chdir(script_dir)
+
 api=os.getenv("Copernicus")
 
 # --- cities ---
@@ -365,4 +374,5 @@ Final.to_csv(
             "region_name": "eu-west-1"
         }
     }
+
 )
