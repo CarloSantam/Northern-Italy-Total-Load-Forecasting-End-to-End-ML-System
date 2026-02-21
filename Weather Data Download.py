@@ -11,7 +11,7 @@ from datetime import timedelta
 
 import os
 
-api=os.getenv("COPERNICUS_KEY ")
+api=os.getenv("COPERNICUS_KEY")
 
 # --- cities ---
 cities = [
@@ -281,7 +281,7 @@ import pandas as pd
 from datetime import datetime,timedelta
 
 # your API key here
-API_KEY = os.getenv("ENTSOE_API_KEY ")
+API_KEY = os.getenv("ENTSOE_API_KEY")
 
 # Create client using your API key
 client = EntsoePandasClient(api_key=API_KEY)
