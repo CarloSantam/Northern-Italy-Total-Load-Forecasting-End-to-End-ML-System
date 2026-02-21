@@ -162,22 +162,27 @@ def process_task(city: dict, window: tuple[pd.Timestamp, pd.Timestamp]) -> pd.Da
         # Return None on failure so the pipeline continues
         print(f"Task failed for {city['citta']} {date_range}: {e}")
         return None
-    
-access_key=os.getenv("access key")
+# Read AWS credentials from environment variables
+access_key = os.getenv("AWS_ACCESS_KEY_ID")
+aws_s3_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 
-aws_s3_key=os.getenv("secret api key aws")
+bucket_name = "loadforecastingdata"
 
-bucket_name='loadforecastingdata'
-
-s3 = boto3.client("s3",aws_access_key_id=access_key,
-    aws_secret_access_key=aws_s3_key,
-    region_name="eu-west-1")
-
-s3.download_file(bucket_name,"Data/Weather_data_.csv","Data/Weather_data_.csv")
-
-df_weather_old=pd.read_csv("Data/Weather_data_.csv")[['citta', 'valid_time',
-       'time', 'u10', 'v10', 'dewpoint_k', 'temp_k', 'surface_pressure_pa',
-       'wind_speed', 'wind_deg', 'humidity_rh']]
+# Read CSV directly from S3
+df_weather_old = pd.read_csv(
+    f"s3://{bucket_name}/Data/Weather_data_.csv",
+    storage_options={
+        "key": access_key,
+        "secret": aws_s3_key,
+        "client_kwargs": {
+            "region_name": "eu-west-1"
+        }
+    }
+)[[
+    "citta", "valid_time", "time", "u10", "v10",
+    "dewpoint_k", "temp_k", "surface_pressure_pa",
+    "wind_speed", "wind_deg", "humidity_rh"
+]]
 
 start = "2023-01-01"
 
@@ -376,3 +381,4 @@ Final.to_csv(
     }
 
 )
+
