@@ -30,4 +30,4 @@ jobs:
             COPERNICUS_KEY: ${{ secrets.COPERNICUS_KEY }}
             ENTSOE_API_KEY: ${{ secrets.ENTSOE_API_KEY }}
         run: |
-          python Weather Data Download.py  # Execute your script
+          python "Weather Data Download.py"  # Execute your script
