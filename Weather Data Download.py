@@ -160,7 +160,7 @@ aws_s3_key=os.getenv("secret api key aws")
 
 bucket_name='loadforecastingdata'
 
-s3 = boto3.client("s3",aws_access_key_id="AKIA4MI2JKATBINFQ2TO",
+s3 = boto3.client("s3",aws_access_key_id=access_key,
     aws_secret_access_key=aws_s3_key,
     region_name="eu-west-1")
 
