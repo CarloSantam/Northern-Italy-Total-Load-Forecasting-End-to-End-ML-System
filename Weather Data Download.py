@@ -154,9 +154,9 @@ def process_task(city: dict, window: tuple[pd.Timestamp, pd.Timestamp]) -> pd.Da
         print(f"Task failed for {city['citta']} {date_range}: {e}")
         return None
     
-access_key=os.getenv("AWS_ACCESS_KEY_ID ")
+access_key=os.getenv("AWS_ACCESS_KEY_ID")
 
-aws_s3_key=os.getenv("AWS_SECRET_ACCESS_KEY ")
+aws_s3_key=os.getenv("AWS_SECRET_ACCESS_KEY")
 
 bucket_name='loadforecastingdata'
 
