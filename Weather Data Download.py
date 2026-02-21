@@ -11,16 +11,7 @@ from datetime import timedelta
 
 import os
 
-# Get the absolute path of the current script
-script_path = os.path.abspath(__file__)
-
-# Get the directory containing the script
-script_dir = os.path.dirname(script_path)
-
-# Change the working directory to the script directory
-os.chdir(script_dir)
-
-api=os.getenv("Copernicus")
+api=os.getenv("COPERNICUS_KEY ")
 
 # --- cities ---
 cities = [
@@ -162,27 +153,22 @@ def process_task(city: dict, window: tuple[pd.Timestamp, pd.Timestamp]) -> pd.Da
         # Return None on failure so the pipeline continues
         print(f"Task failed for {city['citta']} {date_range}: {e}")
         return None
-# Read AWS credentials from environment variables
-access_key = os.getenv("AWS_ACCESS_KEY_ID")
-aws_s3_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+    
+access_key=os.getenv("AWS_ACCESS_KEY_ID ")
 
-bucket_name = "loadforecastingdata"
+aws_s3_key=os.getenv("AWS_SECRET_ACCESS_KEY ")
 
-# Read CSV directly from S3
-df_weather_old = pd.read_csv(
-    f"s3://{bucket_name}/Data/Weather_data_.csv",
-    storage_options={
-        "key": access_key,
-        "secret": aws_s3_key,
-        "client_kwargs": {
-            "region_name": "eu-west-1"
-        }
-    }
-)[[
-    "citta", "valid_time", "time", "u10", "v10",
-    "dewpoint_k", "temp_k", "surface_pressure_pa",
-    "wind_speed", "wind_deg", "humidity_rh"
-]]
+bucket_name='loadforecastingdata'
+
+s3 = boto3.client("s3",aws_access_key_id=access_key,
+    aws_secret_access_key=aws_s3_key,
+    region_name="eu-west-1")
+
+s3.download_file(bucket_name,"Data/Weather_data_.csv","Data/Weather_data_.csv")
+
+df_weather_old=pd.read_csv("Data/Weather_data_.csv")[['citta', 'valid_time',
+       'time', 'u10', 'v10', 'dewpoint_k', 'temp_k', 'surface_pressure_pa',
+       'wind_speed', 'wind_deg', 'humidity_rh']]
 
 start = "2023-01-01"
 
@@ -295,7 +281,7 @@ import pandas as pd
 from datetime import datetime,timedelta
 
 # your API key here
-API_KEY = os.getenv("entsoe")
+API_KEY = os.getenv("ENTSOE_API_KEY ")
 
 # Create client using your API key
 client = EntsoePandasClient(api_key=API_KEY)
@@ -379,6 +365,4 @@ Final.to_csv(
             "region_name": "eu-west-1"
         }
     }
-
 )
-
