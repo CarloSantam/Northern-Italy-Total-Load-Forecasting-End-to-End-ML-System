@@ -241,7 +241,7 @@ for citta in città:
         
     to_export_filtred=to_export_filtred.set_index('valid_time')
     
-    to_export_filtred=to_export_filtred.drop(columns={'time'}).drop_duplicates().resample('15T').asfreq()
+    to_export_filtred=to_export_filtred.drop(columns={'time'}).drop_duplicates().resample('15min').asfreq()
     
     
     to_export_filtred[numeric_columns]=to_export_filtred[numeric_columns].interpolate(method='cubic')
@@ -365,4 +365,5 @@ Final.to_csv(
             "region_name": "eu-west-1"
         }
     }
+
 )
