@@ -3,7 +3,7 @@ name: Weather Data Download
 on:
   schedule:
     # Run every day at 18:12 UTC
-    - cron: '22 18 * * *'
+    - cron: '23 17 * * *'
   workflow_dispatch: # Allow manual trigger
 
 jobs:
