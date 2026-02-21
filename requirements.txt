@@ -1,0 +1,6 @@
+boto3
+cdsapi
+pandas
+numpy
+xarray
+joblib
